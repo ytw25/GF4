@@ -7,7 +7,7 @@
 
 ## Project Groups
 
-- Group 1: G. Fanzer (fg442), Y. Pu (yp299), S.K. Pal (skp58)
+- Group 1: F. Ganzer (fg442), Y. Pu (yp299), S.K. Pal (skp58)
 - Group 2: M. Fylpchuk (mf818), T. Owen (to353), S. Sivaraya (ss3114)
 - Group 3: Y. Wei (ytw25), N.Y. Ouis (nyo21), S. Li (sl2192)
 - Group 4: E. Gu (eg685), V. Leoutsakos (vl346), J. Chen (jc2474)
