@@ -1,22 +1,11 @@
 # GF4: Structure from Motion
 
-## Next Sessions
-- 18 May: JDB Seminar Room
-- 21 May: LR 11
-## Compulsory Sessions
+## Sessions
 
 - Thursdays 9-11am
 - Mondays 11-1pm
 
-
-## Project Groups
-
-- Group 1: F. Ganzer (fg442), Y. Pu (yp299), S.K. Pal (skp58)
-- Group 2: M. Fylpchuk (mf818), T. Owen (to353), S. Sivaraya (ss3114)
-- Group 3: Y. Wei (ytw25), N.Y. Ouis (nyo21), S. Li (sl2192)
-- Group 4: E. Gu (eg685), V. Leoutsakos (vl346), J. Chen (jc2474)
-- Group 5: Y-H. Liu (yhl63), R. Ivanchuk (ri302), J. Parimi (jp2057)
-- Group 6: J. Everett (je477), H.J. Dalton (hd504), T.I.H. Hawkins (th706)
+Room details and project groups are communicated separately for the current cohort.
 
 ## Objectives
 
@@ -53,6 +42,7 @@ The project culminates in a short group presentation and an individual final rep
 - extracting descriptors
 - matching descriptors between image pairs
 - estimating the fundamental matrix
+- detailed guide: [week2/README.md](week2/README.md)
 
 ### Week 3
 
@@ -70,6 +60,7 @@ The project culminates in a short group presentation and an individual final rep
 | Coursework | Due Date | Marks |
 |---|---|---|
 | Interim Report 1 | 21 May 2026 | 15 (individual) |
-| Interim Report 2 | 28 May 2026 | 15 (individual) |
-| SfM code and Presentation | 11 June 2026 | 30 (group) |
+| Interim Report 2 | 29 May 2026 | 15 (individual) |
+| Interim Code | 29 May 2026 | 5 (group) |
+| Final code and Presentation | 11 June 2026 | 25 (group) |
 | Final Report | 11 June 2026 | 40 (individual) |
