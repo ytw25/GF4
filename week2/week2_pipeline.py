@@ -92,7 +92,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--top-k",
         type=int,
-        default=3,
+        default=6,
         help="Number of candidate initial image pairs to save.",
     )
 
