@@ -15,6 +15,7 @@ from typing import Iterable
 
 import cv2
 import numpy as np
+import matplotlib.pyplot as plt
 
 
 IMAGE_EXTENSIONS = {".jpg", ".jpeg", ".png", ".bmp", ".tif", ".tiff"}
@@ -135,20 +136,22 @@ def detect_sift_features(
     image: np.ndarray,
     max_features: int = 4000,
 ) -> tuple[list[cv2.KeyPoint], np.ndarray]:
-    """Detect SIFT keypoints and descriptors.
+    """Detect SIFT keypoints and descriptors."""
 
-    TODO: Complete this function.
+    gray= cv2.cvtColor(image,cv2.COLOR_BGR2GRAY)
+    sift = cv2.SIFT_create(nfeatures=max_features)
+    kp,des = sift.detectAndCompute(gray,None)
 
-    Hints:
-    - Convert the image to grayscale.
-    - Create a SIFT detector with cv2.SIFT_create(nfeatures=max_features).
-    - Return keypoints and descriptors from detector.detectAndCompute(...).
-    - If no descriptors are found, return an empty array with shape (0, 128).
-    - If OpenCV returns slightly more than max_features, keep only the first
-      max_features keypoints and matching descriptor rows.
-    """
-    raise NotImplementedError("TODO: implement SIFT feature detection")
-
+    if not des.shape:
+        des= np.array((0,128))
+    elif len(kp)>max_features:
+        kp=kp[:max_features]
+        des=des[:max_features]
+    
+    #Draw keypoints
+    #img=cv2.drawKeypoints(gray,kp,image,flags=cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
+    #cv2.imwrite('sift_keypoints.jpg',img)
+    return kp,des
 
 def precompute_image_features(
     image_paths: list[Path],
@@ -157,27 +160,29 @@ def precompute_image_features(
 ) -> list[ImageFeatures]:
     """Load each image and compute SIFT features once.
 
-    TODO: Complete this function after implementing detect_sift_features.
-
     Dataset mode should use this function so SIFT is not recomputed for the
     same image in every pair.
     """
-    raise NotImplementedError("TODO: implement feature precomputation")
+    image_features=[]
+    for path in image_paths:
+        image= cv2.imread(path)
+        image_features.append(detect_sift_features(image,max_features))
+    return image_features
 
 
 def raw_descriptor_matches(desc1: np.ndarray, desc2: np.ndarray) -> list[cv2.DMatch]:
-    """Return one nearest-neighbour match per descriptor before Lowe filtering.
+    """Return one nearest-neighbour match per descriptor before Lowe filtering"""
+    if len(desc1)==0  or len(desc2)==0:
+        return []
+    
+    bf = cv2.BFMatcher(cv2.NORM_L2)
+    matches = bf.match(desc1,desc2)
+    matches = sorted(matches, key = lambda x:x.distance)
 
-    TODO: Complete this function.
-
-    Hints:
-    - Handle empty descriptor arrays by returning an empty list.
-    - For SIFT descriptors, use cv2.BFMatcher(cv2.NORM_L2).
-    - Use matcher.match(desc1, desc2) to get the best match in image 2 for
-      each descriptor in image 1.
-    - Return the matches sorted by descriptor distance.
-    """
-    raise NotImplementedError("TODO: compute raw nearest-neighbour matches")
+    #Visualisation of raw matches
+    #img1 = cv2.drawMatchesKnn(img1,kp1,img2,kp2,matches,None,flags=cv2.DrawMatchesFlags_NOT_DRAW_SINGLE_POINTS)
+    #plt.imshow(img1),plt.show()
+    return matches
 
 
 def match_descriptors(
@@ -185,28 +190,26 @@ def match_descriptors(
     desc2: np.ndarray,
     ratio: float = 0.75,
 ) -> list[cv2.DMatch]:
-    """Match SIFT descriptors using Lowe's ratio test.
+    """Match SIFT descriptors using Lowe's ratio test."""
+    # BFMatcher
+    bf = cv2.BFMatcher(cv2.NORM_L2)
+    matches = bf.knnMatch(desc1,desc2,k=2)
 
-    TODO: Complete this function.
-
-    Hints:
-    - Handle empty descriptor arrays by returning an empty list.
-    - For SIFT descriptors, use cv2.BFMatcher(cv2.NORM_L2).
-    - Use knnMatch(desc1, desc2, k=2) for the ratio test.
-    - Keep a match when best_distance < ratio * second_best_distance.
-    """
-    raise NotImplementedError("TODO: implement descriptor matching")
+    # Apply ratio test
+    good = []
+    for m,n in matches:
+        if m.distance < ratio*n.distance:
+            good.append(m)
+    
+    # cv.drawMatchesKnn expects list of lists as matches.
+    #img1 = cv2.drawMatchesKnn(img1,kp1,img2,kp2,good,None,flags=cv2.DrawMatchesFlags_NOT_DRAW_SINGLE_POINTS)
+    #plt.imshow(img2),plt.show()
+    return good
 
 
 def count_raw_matches(desc1: np.ndarray, desc2: np.ndarray) -> int:
-    """Return the number of descriptors that can be matched before filtering.
-
-    TODO: Complete this function.
-
-    A simple definition is len(raw_descriptor_matches(desc1, desc2)). This
-    gives a useful denominator for comparing raw and filtered matching.
-    """
-    raise NotImplementedError("TODO: count raw descriptor matches")
+    """Return the number of descriptors that can be matched before filtering"""
+    len(raw_descriptor_matches(desc1, desc2))
 
 
 def matched_keypoint_coords(
@@ -214,13 +217,13 @@ def matched_keypoint_coords(
     keypoints2: list[cv2.KeyPoint],
     matches: list[cv2.DMatch],
 ) -> tuple[np.ndarray, np.ndarray]:
-    """Convert OpenCV matches into aligned Nx2 coordinate arrays.
-
-    TODO: Complete this function.
-
-    Remember: cv2.KeyPoint.pt is (x, y), not (row, column).
-    """
-    raise NotImplementedError("TODO: convert matches to coordinate arrays")
+    """Convert OpenCV matches into aligned Nx2 coordinate arrays."""
+    img1=[]
+    img2=[]
+    for match in matches :
+        img1.append(keypoints1[match.queryIdx].pt)
+        img2.append(keypoints2[match.trainIdx].pt)
+    return (np.array(img1),np.array(img2))
 
 
 def estimate_fundamental_ransac(
@@ -229,15 +232,15 @@ def estimate_fundamental_ransac(
     threshold: float = 1.0,
     confidence: float = 0.99,
 ) -> tuple[np.ndarray, np.ndarray]:
-    """Estimate the fundamental matrix with OpenCV RANSAC.
-
-    TODO: Complete this function.
-
-    Return:
-    - F: 3x3 fundamental matrix
-    - inlier_mask: boolean array of shape (N,)
-    """
-    raise NotImplementedError("TODO: estimate fundamental matrix with RANSAC")
+    """Estimate the fundamental matrix with OpenCV RANSAC."""
+    F, inlier_mask = cv2.findFundamentalMat(
+                                            pts1,
+                                            pts2,
+                                            method=cv2.FM_RANSAC,
+                                            ransacReprojThreshold=threshold,
+                                            confidence=confidence
+                                            )
+    return F,inlier_mask
 
 
 def compute_epipolar_errors(
@@ -252,7 +255,15 @@ def compute_epipolar_errors(
     For each point x1 in image 1, compute the epipolar line l2 = F x1.
     Then compute the distance from the corresponding x2 to l2.
     """
-    raise NotImplementedError("TODO: implement epipolar error calculation")
+    errors=[]
+    for i in range(len(pts1)):
+        x1=np.append(pts1[i],1)
+        x2=np.append(pts2[i],1)
+        l_2 = F.dot(x1)
+        errors.append(abs(l_2.T.dot(x2)) / np.sqrt(np.linalg.norm(l_2,ord=2)**2-l_2[-1]**2))
+    return np.array(errors)
+
+
 
 
 def draw_keypoints(
@@ -269,6 +280,7 @@ def draw_keypoints(
         flags=cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS,
     )
     cv2.imwrite(str(output_path), vis)
+    return None
 
 
 def draw_matches(
@@ -293,6 +305,7 @@ def draw_matches(
         flags=cv2.DrawMatchesFlags_NOT_DRAW_SINGLE_POINTS,
     )
     cv2.imwrite(str(output_path), vis)
+    return None
 
 
 def draw_epipolar_lines(
@@ -305,16 +318,34 @@ def draw_epipolar_lines(
     max_lines: int = 20,
 ) -> None:
     """Save an epipolar-line visualisation.
-
-    TODO: Complete this function.
-
     Hints:
     - Sample up to max_lines corresponding points.
     - For each x1, draw l2 = F x1 in image 2.
     - Draw the corresponding x2 point on image 2.
     - A simple Matplotlib figure with image1 and image2 side by side is enough.
     """
-    raise NotImplementedError("TODO: implement epipolar-line visualisation")
+    img1 = image1.copy()
+    img2 = image2.copy()
+    h, w = img2.shape[:2]
+    for i in range(min(len(pts1),max_lines)):
+        x1 = np.append(pts1[i],1)
+        l_2 = F.dot(x1)
+        a,b,c=l_2
+        if abs(b)<10**(-4):
+            x0,y0=map(int,[-c/a,0])
+            x1,y1=map(int,[-c/a,h])
+        else:
+            x0,y0=map(int,[0,-c/b])
+            x1,y1=map(int,[w,-(c+a*w)/b])
+
+        img1 = cv2.circle(img1,pts1[i],5,(255,0,0),-1)
+        img2 = cv2.line(img2,(x0,y0),(x1,y1), (255,0,0),1)
+        img2 = cv2.circle(img2,pts2[i],5,(255,0,0),-1)
+    cv2.imwrite(Path(output_path,'epipolar_kp1.jpg'), img1)
+    cv2.imwrite(Path(output_path,'epipolar_kp2.jpg'), img2)
+    both= np.concatenate((img1, img2), axis=1)
+    cv2.imwrite(Path(output_path,'epipolar.jpg'), both)
+    return None
 
 
 def analyse_image_pair(
@@ -326,21 +357,18 @@ def analyse_image_pair(
     max_image_size: int | None = 1600,
     save_figures: bool = True,
 ) -> PairAnalysis:
-    """Run the full Week 2 analysis for one image pair.
+    """Run the full Week 2 analysis for one image pair.    """
+    #Load both images.
+    image1=load_image(image1_path, max_image_size)
+    image2=load_image(image2_path, max_image_size)
+    # Detect SIFT features.
+    kp1,des1=detect_sift_features(image1,max_features=max_features)
+    kp2,des2=detect_sift_features(image2,max_features=max_features)
+    features1=ImageFeatures(image1_path,image1,kp1,des1)
+    features2=ImageFeatures(image2_path,image2,kp2,des2)
+    return analyse_feature_pair(features1,features2,output_dir,ratio,save_figures)
+    
 
-    TODO: Complete this function by wiring together the utilities above.
-
-    Expected steps:
-    1. Load both images.
-    2. Detect SIFT features.
-    3. Match descriptors with Lowe's ratio test.
-    4. Convert matches to point arrays.
-    5. Estimate F with RANSAC.
-    6. Compute epipolar errors for all filtered matches and for RANSAC inliers.
-    7. Save keypoint, raw-match, filtered-match, inlier, and epipolar-line figures.
-    8. Return a PairAnalysis object.
-    """
-    raise NotImplementedError("TODO: implement pair analysis pipeline")
 
 
 def analyse_feature_pair(
@@ -358,7 +386,40 @@ def analyse_feature_pair(
     In dataset mode, save_figures is normally False, so this function should
     return metrics without creating an output folder for every image pair.
     """
-    raise NotImplementedError("TODO: implement pair analysis from precomputed features")
+    image1,image1_path,kp1,des1=features1.image,features1.path,features1.keypoints,features1.descriptors
+    image2,image2_path,kp2,des2=features2.image,features2.path,features2.keypoints,features2.descriptors
+
+
+    # Match descriptors with Lowe's ratio test.
+    filtered_matches=match_descriptors(des1,des2, ratio=ratio)
+    raw_matches=raw_descriptor_matches(des1,des2)
+    # Convert matches to point arrays.
+    pts1,pts2=matched_keypoint_coords(kp1,kp2,filtered_matches)
+    # Estimate F with RANSAC.
+    F,mask=estimate_fundamental_ransac(pts1,pts2)
+    
+    pts1=np.int32(pts1)
+    pts2=np.int32(pts2)
+    inliers1=pts1[mask.ravel()==1]
+    inliers2=pts2[mask.ravel()==1]
+    # Compute epipolar errors for all filtered matches and for RANSAC inliers.
+    errors=compute_epipolar_errors(F,pts1,pts2)
+    errors_inlier=compute_epipolar_errors(F,inliers1,inliers2)
+    # Save keypoint, raw-match, filtered-match, inlier, and epipolar-line figures.
+    if save_figures:
+        draw_keypoints(image1,kp1,Path(output_dir,'img1_kp.jpg'))
+        draw_keypoints(image2,kp2,Path(output_dir,'img2_kp.jpg'))
+        draw_matches(image1,kp1,image2,kp2,raw_matches,Path(output_dir,'raw_matches.jpg'))
+        draw_matches(image1,kp1,image2,kp2,filtered_matches,Path(output_dir,'filtered_matches.jpg'))
+        draw_keypoints(image1,kp1,Path(output_dir,'img1_kp.jpg'))
+        draw_epipolar_lines(image1,image2,inliers1,inliers2,F, output_dir)
+    # Return a PairAnalysis object.
+    res=PairAnalysis(image1_path,image2_path, kp1, kp2, raw_matches,filtered_matches,
+                     inliers1,len(inliers1)/len(filtered_matches),np.mean(errors),np.median(errors),
+                     np.mean(errors_inlier),np.median(errors_inlier),np.max(errors_inlier),F
+                     )
+    return res
+
 
 
 def draw_match_graph(
