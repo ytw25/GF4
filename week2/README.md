@@ -160,20 +160,6 @@ Use the OpenCV documentation to check exact arguments and return values. Your im
 
 ---
 
-## AI use policy
-
-You may use AI tools to help you learn the background material, understand the concepts, and interpret documentation. For example, you may use AI to ask:
-
-- what SIFT keypoints and descriptors represent,
-- how Lowe's ratio test works,
-- what OpenCV functions such as `cv2.SIFT_create`, `BFMatcher.knnMatch`, or `cv2.findFundamentalMat` return.
-
-You may **not** use AI tools to write code for this assignment, edit code, fix code, debug code, generate tests, or diagnose implementation errors. The implementation you submit must be written and debugged by your group.
-
-Any use of AI tools must be clearly mentioned in your experiment log.
-
----
-
 ## Phase A - Feature detection and matching
 
 Start with two images from your best Week 1 capture. Choose a pair with good overlap and visible camera motion.
@@ -444,10 +430,9 @@ Include:
    - Why did you choose the final good and bad pairs?
    - Did any result surprise you?
 
-4. **AI and external assistance**
+<!-- 4. **AI and external assistance**
    - You must state clearly what AI assistance you used for learning concepts or understanding documentation.
-   - Do not use AI tools to write, edit, test, or debug your code.
-   - You are responsible for understanding every part of the code you submit.
+   - You are responsible for understanding every part of the code you submit. -->
 
 ---
 
