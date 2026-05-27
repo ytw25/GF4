@@ -418,6 +418,9 @@ def analyse_feature_pair(
                      inliers1,len(inliers1)/len(filtered_matches),np.mean(errors),np.median(errors),
                      np.mean(errors_inlier),np.median(errors_inlier),np.max(errors_inlier),F
                      )
+    print(res.median_epipolar_error_all,res.median_epipolar_error_inliers)
+    print(len(kp1),len(kp2))
+    print(len(raw_matches),len(filtered_matches))
     return res
 
 
