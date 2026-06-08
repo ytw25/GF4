@@ -127,7 +127,18 @@ def estimate_essential_matrix(
     TODO: Complete this function.
 
     """
-    raise NotImplementedError("TODO: estimate essential matrix")
+    E, mask = cv2.findEssentialMat(
+    pts1,
+    pts2,
+    K,
+    method=cv2.RANSAC,
+    prob=confidence,
+    threshold=threshold,
+)
+
+    mask = mask.ravel().astype(bool)
+
+    return E, mask
 
 
 def recover_relative_pose(
@@ -142,7 +153,14 @@ def recover_relative_pose(
     TODO: Complete this function.
 
     """
-    raise NotImplementedError("TODO: recover relative pose")
+    mask = None
+    if inlier_mask is not None:
+        mask = inlier_mask.ravel().astype(np.uint8).reshape(-1, 1)
+
+    _, R, t, pose_mask = cv2.recoverPose(E, pts1, pts2, K, mask=mask)
+    pose_mask = pose_mask.ravel().astype(bool)
+
+    return R, t, pose_mask
 
 
 def make_projection_matrices(
@@ -154,7 +172,15 @@ def make_projection_matrices(
 
     TODO: Complete this function.
     """
-    raise NotImplementedError("TODO: create projection matrices")
+    I = np.eye(3)
+    zero = np.zeros((3,1))
+
+    t = t.reshape(3,1)
+
+    P1 = K @ np.hstack([I, zero])
+    P2 = K @ np.hstack([R, t])
+
+    return P1, P2
 
 
 def triangulate_points(
@@ -169,8 +195,20 @@ def triangulate_points(
     TODO: Complete this function.
 
     """
-    raise NotImplementedError("TODO: triangulate 3D points")
+    P1, P2 = make_projection_matrices(K, R, t)
 
+    pts1 = pts1.astype(np.float64)
+    pts2 = pts2.astype(np.float64)
+
+    points4d = cv2.triangulatePoints(P1, P2, pts1.T, pts2.T)
+
+    w = points4d[3]
+    valid_w = np.abs(w) > 1e-12
+
+    points3d = np.full((points4d.shape[1], 3), np.nan, dtype=np.float64)
+    points3d[valid_w] = (points4d[:3, valid_w] / w[valid_w]).T
+
+    return points3d
 
 def project_points(
     points3d: np.ndarray,
@@ -182,7 +220,21 @@ def project_points(
 
     TODO: Complete this function.
     """
-    raise NotImplementedError("TODO: project 3D points")
+    t = t.reshape(3,1)
+    P = K @ np.hstack([R, t]) 
+
+    points3d_h = np.hstack([
+        points3d,
+        np.ones((points3d.shape[0], 1))
+    ])
+
+    # [u', v', w]
+    points2d_h = (P @ points3d_h.T).T
+
+    # u = u' / w, v = v' / w
+    points2d = points2d_h[:, :2]/ points2d_h[:, 2:3]
+
+    return points2d
 
 
 def compute_reprojection_errors(
@@ -197,7 +249,11 @@ def compute_reprojection_errors(
     TODO: Complete this function by projecting points3d and comparing with
     observed_pts.
     """
-    raise NotImplementedError("TODO: compute reprojection errors")
+    proj_points = project_points(points3d, K, R, t)
+
+    proj_errors = np.linalg.norm(proj_points - observed_pts, axis=1)
+
+    return proj_errors
 
 
 def compute_depths(
@@ -211,7 +267,16 @@ def compute_depths(
 
     Camera 1 has extrinsics [I|0]. Camera 2 has extrinsics [R|t].
     """
-    raise NotImplementedError("TODO: compute point depths")
+    t = t.reshape(3, 1)
+
+    depth_1 = points3d[:, 2]
+
+    # Transform points from camera 1 coordinates to camera 2 coordinates
+    points3d_cam2 = (R @ points3d.T + t).T
+
+    depth_2 = points3d_cam2[:, 2]
+
+    return depth_1, depth_2
 
 
 def filter_reconstructed_points(
@@ -231,7 +296,20 @@ def filter_reconstructed_points(
     - have positive depth in both cameras,
     - have reprojection error at most max_reprojection_error in both images.
     """
-    raise NotImplementedError("TODO: filter reconstructed points")
+    finite = np.isfinite(points3d).all(axis=1)
+
+    depth_1, depth_2 = compute_depths(points3d, R, t)
+    positive_depth = (depth_1 > 0) & (depth_2 > 0)
+
+    small_error = (
+        (errors1 <= max_reprojection_error)
+        & (errors2 <= max_reprojection_error)
+    )
+
+    valid_mask = finite & positive_depth & small_error
+
+    return valid_mask
+
 
 
 def build_2d3d_correspondences(
@@ -260,8 +338,27 @@ def build_2d3d_correspondences(
     - points3d: Nx3 reconstructed 3D points
     - pts_new: Nx2 feature coordinates in the new image
     """
-    raise NotImplementedError("TODO: build 2D-3D correspondences")
+    points3d = []
+    pts_new = []
 
+    # dictionary: anchor keypoint id -> reconstructed_points[i]
+    anchor_to_point3d = {
+        int(anchor_idx): reconstructed_points[i]
+        for i, anchor_idx in enumerate(reconstructed_anchor_indices)
+    }
+
+    for m in anchor_to_new_matches:
+        anchor_idx = m.queryIdx
+        new_idx = m.trainIdx
+
+        if anchor_idx in anchor_to_point3d:
+            points3d.append(anchor_to_point3d[anchor_idx])
+            pts_new.append(new_keypoints[new_idx].pt)
+
+    return (
+        np.asarray(points3d, dtype=np.float32).reshape(-1, 3),
+        np.asarray(pts_new, dtype=np.float32).reshape(-1, 2),
+    )
 
 def estimate_camera_pose_pnp(
     points3d: np.ndarray,
@@ -279,8 +376,30 @@ def estimate_camera_pose_pnp(
     - t: 3x1 world-to-camera translation for the new image
     - inlier_mask: boolean array of shape (N,)
     """
-    raise NotImplementedError("TODO: estimate camera pose with PnP")
+    points3d = np.asarray(points3d, dtype=np.float32).reshape(-1, 3)
+    pts2d = np.asarray(pts2d, dtype=np.float32).reshape(-1, 2)
 
+    if len(points3d) < 4:
+        raise ValueError(f"PnP needs at least 4 correspondences, got {len(points3d)}")
+
+    success, rvec, tvec, inliers = cv2.solvePnPRansac(
+        points3d,
+        pts2d,
+        K,
+        None,
+        reprojectionError=threshold,
+        confidence=confidence,
+    )
+
+    if not success or inliers is None:
+        raise RuntimeError("solvePnPRansac failed to estimate a camera pose")
+
+    R, _ = cv2.Rodrigues(rvec)
+
+    inlier_mask = np.zeros(len(points3d), dtype=bool)
+    inlier_mask[inliers.ravel()] = True
+
+    return R, tvec, inlier_mask
 
 def sample_point_colours(image: np.ndarray, pts: np.ndarray) -> np.ndarray:
     if len(pts) == 0:
@@ -322,7 +441,25 @@ def draw_reprojection_overlay(
     This is one of the main ways to check whether your reconstruction is
     geometrically meaningful.
     """
-    raise NotImplementedError("TODO: draw two-view reprojection overlay")
+    ensure_dir(output_path.parent)
+
+    image1_draw = image1.copy()
+    image2_draw = image2.copy()
+    h1, w1 = image1_draw.shape[:2]
+    h2, w2 = image2_draw.shape[:2]
+
+    canvas = np.full((max(h1, h2), w1 + w2, 3), 255, dtype=np.uint8)
+    canvas[:h1, :w1] = image1_draw
+    canvas[:h2, w1:w1 + w2] = image2_draw
+
+    proj1 = project_points(points3d, K, np.eye(3), np.zeros((3, 1)))
+    proj2 = project_points(points3d, K, R, t)
+
+    _draw_reprojection_pairs(canvas, pts1, proj1, x_offset=0, max_draw=max_draw)
+    _draw_reprojection_pairs(canvas, pts2, proj2, x_offset=w1, max_draw=max_draw)
+
+    if not cv2.imwrite(str(output_path), canvas):
+        raise IOError(f"Could not save reprojection overlay to {output_path}")
 
 
 def draw_single_image_reprojection_overlay(
@@ -348,11 +485,59 @@ def draw_single_image_reprojection_overlay(
     This is the corresponding correctness check for the image registered by
     PnP.
     """
-    raise NotImplementedError("TODO: draw single-image reprojection overlay")
+    ensure_dir(output_path.parent)
+
+    canvas = image.copy()
+    projected_pts = project_points(points3d, K, R, t)
+    _draw_reprojection_pairs(canvas, observed_pts, projected_pts, max_draw=max_draw)
+
+    if not cv2.imwrite(str(output_path), canvas):
+        raise IOError(f"Could not save reprojection overlay to {output_path}")
+
+
+def _draw_reprojection_pairs(
+    image: np.ndarray,
+    observed_pts: np.ndarray,
+    projected_pts: np.ndarray,
+    x_offset: int = 0,
+    max_draw: int = 120,
+) -> None:
+    observed_pts = np.asarray(observed_pts, dtype=np.float64).reshape(-1, 2)
+    projected_pts = np.asarray(projected_pts, dtype=np.float64).reshape(-1, 2)
+
+    finite = np.isfinite(observed_pts).all(axis=1) & np.isfinite(projected_pts).all(axis=1)
+    draw_indices = np.flatnonzero(finite)
+    if len(draw_indices) > max_draw:
+        draw_indices = draw_indices[np.linspace(0, len(draw_indices) - 1, max_draw, dtype=int)]
+
+    # Round to pixel
+    for idx in draw_indices:
+        observed = np.rint(observed_pts[idx]).astype(int)
+        projected = np.rint(projected_pts[idx]).astype(int)
+        observed_xy = (int(observed[0] + x_offset), int(observed[1]))
+        projected_xy = (int(projected[0] + x_offset), int(projected[1]))
+
+        cv2.line(image, observed_xy, projected_xy, (0, 200, 255), 1, cv2.LINE_AA)
+        cv2.circle(image, observed_xy, 5, (0, 0, 0), 2, cv2.LINE_AA)
+        cv2.circle(image, observed_xy, 4, (40, 220, 80), -1, cv2.LINE_AA)
+        cv2.drawMarker(
+            image,
+            projected_xy,
+            (30, 60, 255),
+            markerType=cv2.MARKER_CROSS,
+            markerSize=12,
+            thickness=2,
+            line_type=cv2.LINE_AA,
+        )
 
 
 def _camera_center(R: np.ndarray, t: np.ndarray) -> np.ndarray:
     return (-R.T @ t.reshape(3, 1)).ravel()
+
+
+def camera_center(R: np.ndarray, t: np.ndarray) -> np.ndarray:
+    """Return the camera centre in world coordinates for extrinsics [R|t]."""
+    return _camera_center(R, t)
 
 
 def _camera_frustum(
@@ -370,6 +555,11 @@ def _camera_frustum(
         dtype=np.float64,
     )
     return center[None, :] + scale * (R_wc @ corners.T).T
+
+
+def camera_frustum(R: np.ndarray, t: np.ndarray, scale: float) -> np.ndarray:
+    """Return four frustum corner points for a camera with extrinsics [R|t]."""
+    return _camera_frustum(R.T, camera_center(R, t), scale)
 
 
 def _set_axes_equal(ax) -> None:
