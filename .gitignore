@@ -4,5 +4,10 @@ __pycache__/
 week2/data/
 week2/output/
 week3/output/
-week4/
+week4/images/
+week4/minimal_set/
+week4/output_1.0/
+week4/output_2.0/
+week4/output_3.0/
+week4/week4_pipeline.py
 README.md
