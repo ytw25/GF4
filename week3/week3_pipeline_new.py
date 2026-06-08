@@ -6,6 +6,12 @@ image with the strongest Week 2 pairwise evidence, register it with PnP, and
 triangulate extra points from the newly registered view.
 """
 
+# python .\week3\week3_pipeline_new.py `
+# --image-dir .\week4\ `
+# --image1  `
+# --image2  `
+# --output-dir ./week4/output
+
 from __future__ import annotations
 
 import argparse
