@@ -21,9 +21,13 @@ import sys
 import cv2
 import numpy as np
 
+WEEK4_DIR = Path(__file__).resolve().parent
 WEEK3_DIR = Path(__file__).resolve().parents[1] / "week3"
-if str(WEEK3_DIR) not in sys.path:
-    sys.path.insert(0, str(WEEK3_DIR))
+for module_dir in (WEEK3_DIR, WEEK4_DIR):
+    module_path = str(module_dir)
+    if module_path in sys.path:
+        sys.path.remove(module_path)
+    sys.path.insert(0, module_path)
 
 from two_view_utils import (
     ThirdViewResult,
@@ -129,6 +133,11 @@ def parse_args() -> argparse.Namespace:
         "--skip-figures",
         action="store_true",
         help="Write metrics and PLY only, skipping PNG visualisations.",
+    )
+    parser.add_argument(
+        "--bundle-adjustment",
+        action="store_true",
+        help="Run global bundle adjustment before writing final PLY and multi-view figures.",
     )
 
     args = parser.parse_args()
@@ -913,7 +922,103 @@ def write_camera_frustums_ply(
     output_path.write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 
-def run(args: argparse.Namespace) -> tuple[TwoViewResult, list[ThirdViewResult], list[str]]:
+def write_reconstruction_with_cameras_ply(
+    output_path: Path,
+    points3d: np.ndarray,
+    colours: np.ndarray,
+    camera_poses: list[tuple[str, np.ndarray, np.ndarray]],
+    scale: float | None = None,
+) -> None:
+    """Write sparse points and dotted camera frustums into one point-only PLY."""
+    ensure_dir(output_path.parent)
+
+    points = np.asarray(points3d, dtype=np.float64).reshape(-1, 3)
+    point_colours = np.asarray(colours, dtype=np.uint8).reshape(-1, 3)
+    if len(point_colours) != len(points):
+        point_colours = np.full((len(points), 3), 200, dtype=np.uint8)
+
+    vertices: list[tuple[float, float, float, int, int, int]] = []
+    for point, colour in zip(points, point_colours):
+        vertices.append(
+            (
+                float(point[0]),
+                float(point[1]),
+                float(point[2]),
+                int(colour[0]),
+                int(colour[1]),
+                int(colour[2]),
+            )
+        )
+
+    if camera_poses:
+        centers = np.asarray([camera_center(R, t) for _, R, t in camera_poses], dtype=np.float64)
+        if scale is None:
+            if len(centers) >= 2:
+                baselines = [
+                    np.linalg.norm(centers[i] - centers[j])
+                    for i in range(len(centers))
+                    for j in range(i + 1, len(centers))
+                ]
+                scale = max(0.12, 0.12 * float(np.median(baselines)))
+            else:
+                scale = 0.12
+
+        palette = np.asarray(
+            [
+                [88, 166, 255],
+                [255, 123, 114],
+                [126, 231, 135],
+                [210, 168, 255],
+                [255, 166, 87],
+                [121, 192, 255],
+            ],
+            dtype=np.uint8,
+        )
+        for camera_idx, (_, R, t) in enumerate(camera_poses):
+            colour = palette[camera_idx % len(palette)]
+            center = camera_center(R, t)
+            frustum = camera_frustum(R, t, scale)
+            edge_pairs = [
+                (center, frustum[0]),
+                (center, frustum[1]),
+                (center, frustum[2]),
+                (center, frustum[3]),
+                (frustum[0], frustum[1]),
+                (frustum[1], frustum[2]),
+                (frustum[2], frustum[3]),
+                (frustum[3], frustum[0]),
+            ]
+            for start, end in edge_pairs:
+                for alpha in np.linspace(0.0, 1.0, 24):
+                    point = (1.0 - alpha) * start + alpha * end
+                    vertices.append(
+                        (
+                            float(point[0]),
+                            float(point[1]),
+                            float(point[2]),
+                            int(colour[0]),
+                            int(colour[1]),
+                            int(colour[2]),
+                        )
+                    )
+
+    lines = [
+        "ply",
+        "format ascii 1.0",
+        f"element vertex {len(vertices)}",
+        "property float x",
+        "property float y",
+        "property float z",
+        "property uchar red",
+        "property uchar green",
+        "property uchar blue",
+        "end_header",
+    ]
+    lines.extend(f"{x:.8f} {y:.8f} {z:.8f} {r} {g} {b}" for x, y, z, r, g, b in vertices)
+    output_path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+
+
+def run(args: argparse.Namespace) -> tuple[TwoViewResult, list[ThirdViewResult], list[str], object | None]:
     output_dir = ensure_dir(args.output_dir)
     week2 = load_week2_module(args.week2_dir)
 
@@ -1291,29 +1396,70 @@ def run(args: argparse.Namespace) -> tuple[TwoViewResult, list[ThirdViewResult],
     point_array = np.asarray(points3d, dtype=np.float64).reshape(-1, 3)
     colour_array = np.asarray(point_colours, dtype=np.uint8).reshape(-1, 3)
     track_lengths = np.asarray([len(track) for track in point_tracks], dtype=np.float64)
+    bundle_adjustment_result = None
+    if args.bundle_adjustment:
+        from bundle_adjustment import bundle_adjustment
+
+        fixed_camera_ids = set(camera_order[:2])
+        bundle_adjustment_result = bundle_adjustment(
+            camera_poses=camera_poses,
+            points3d=point_array,
+            intrinsics=intrinsics,
+            features=features,
+            observations_by_image=observations_by_image,
+            fixed_camera_ids=fixed_camera_ids,
+        )
+        point_array = bundle_adjustment_result.points3d
+        camera_poses = bundle_adjustment_result.camera_poses
+        save_csv(
+            output_dir / "bundle_adjustment_metrics.csv",
+            [bundle_adjustment_result.as_dict()],
+        )
+        for camera_number, image_idx in enumerate(camera_order, start=1):
+            R_ba, t_ba = camera_poses[image_idx]
+            np.savetxt(output_dir / f"R{camera_number}_ba.txt", R_ba)
+            np.savetxt(output_dir / f"t{camera_number}_ba.txt", t_ba)
+
     camera_poses_for_plot = [
         (f"Camera {idx + 1}", *camera_poses[image_idx])
         for idx, image_idx in enumerate(camera_order)
     ]
     write_ply(output_dir / "points3d.ply", point_array, colour_array)
     write_camera_frustums_ply(output_dir / "cameras.ply", camera_poses_for_plot)
+    write_reconstruction_with_cameras_ply(
+        output_dir / "reconstruction_with_cameras.ply",
+        point_array,
+        colour_array,
+        camera_poses_for_plot,
+    )
+    summary_row = {
+        "input_images": len(features),
+        "registered_images": len(camera_order),
+        "rejected_images": len(rejected_diagnostics),
+        "points3d": len(point_array),
+        "initial_image1": features1.path.name,
+        "initial_image2": features2.path.name,
+        "initial_pair_score": initial_pair["metrics"]["score"],
+        "lowe_ratio": args.ratio,
+        "min_triangulation_angle_deg": args.min_triangulation_angle_deg,
+        "median_track_length": _median(track_lengths),
+        "mean_track_length": _mean(track_lengths),
+        "bundle_adjustment_enabled": bool(args.bundle_adjustment),
+    }
+    if bundle_adjustment_result is not None:
+        summary_row.update(
+            {
+                "ba_observations": bundle_adjustment_result.observation_count,
+                "ba_initial_mean_error_px": bundle_adjustment_result.initial_mean_error,
+                "ba_final_mean_error_px": bundle_adjustment_result.final_mean_error,
+                "ba_initial_median_error_px": bundle_adjustment_result.initial_median_error,
+                "ba_final_median_error_px": bundle_adjustment_result.final_median_error,
+            }
+        )
+
     save_csv(
         output_dir / "reconstruction_summary.csv",
-        [
-            {
-                "input_images": len(features),
-                "registered_images": len(camera_order),
-                "rejected_images": len(rejected_diagnostics),
-                "points3d": len(point_array),
-                "initial_image1": features1.path.name,
-                "initial_image2": features2.path.name,
-                "initial_pair_score": initial_pair["metrics"]["score"],
-                "lowe_ratio": args.ratio,
-                "min_triangulation_angle_deg": args.min_triangulation_angle_deg,
-                "median_track_length": _median(track_lengths),
-                "mean_track_length": _mean(track_lengths),
-            }
-        ],
+        [summary_row],
     )
 
     if not args.skip_figures:
@@ -1332,14 +1478,19 @@ def run(args: argparse.Namespace) -> tuple[TwoViewResult, list[ThirdViewResult],
                 output_dir / "multi_view_patch_cloud.png",
             )
 
-    return two_view_result, registered_results, [row.get("image", "") for row in rejected_diagnostics if row.get("image")]
+    return (
+        two_view_result,
+        registered_results,
+        [row.get("image", "") for row in rejected_diagnostics if row.get("image")],
+        bundle_adjustment_result,
+    )
 
 
 def main() -> int:
     args = parse_args()
 
     try:
-        result, registered_results, rejected_images = run(args)
+        result, registered_results, rejected_images, bundle_adjustment_result = run(args)
     except NotImplementedError as exc:
         print(f"\nStarter-code TODO reached: {exc}", file=sys.stderr)
         print(
@@ -1366,8 +1517,21 @@ def main() -> int:
         print(f"  rejected images: {len(rejected_images)}")
         for image_name in rejected_images:
             print(f"    {image_name}")
+    if bundle_adjustment_result is not None:
+        print("  bundle adjustment: enabled")
+        print(
+            "    mean reprojection error: "
+            f"{bundle_adjustment_result.initial_mean_error:.3f} -> "
+            f"{bundle_adjustment_result.final_mean_error:.3f} px"
+        )
+        print(
+            "    median reprojection error: "
+            f"{bundle_adjustment_result.initial_median_error:.3f} -> "
+            f"{bundle_adjustment_result.final_median_error:.3f} px"
+        )
     print(f"  meshlab point cloud: {args.output_dir / 'points3d.ply'}")
     print(f"  meshlab cameras: {args.output_dir / 'cameras.ply'}")
+    print(f"  combined view: {args.output_dir / 'reconstruction_with_cameras.ply'}")
     print(f"  wrote: {args.output_dir}")
     return 0
 
