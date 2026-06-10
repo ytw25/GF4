@@ -1,0 +1,9 @@
+image,reason,pnp_correspondences,pnp_inliers,candidate_score
+IMG_20260518_203902.jpg,too few 2D-3D correspondences,16,0,0.0
+IMG_20260518_203904.jpg,too few 2D-3D correspondences,17,0,0.0
+IMG_20260518_203906.jpg,too few 2D-3D correspondences,18,0,0.0
+IMG_20260518_203908.jpg,too few 2D-3D correspondences,21,0,0.0
+IMG_20260518_203909.jpg,too few 2D-3D correspondences,24,0,0.0
+IMG_20260518_203913.jpg,below PnP inlier threshold,31,14,0.0
+IMG_20260518_203946.jpg,below PnP inlier threshold,38,19,0.0
+IMG_20260518_203948.jpg,too few 2D-3D correspondences,14,0,0.0

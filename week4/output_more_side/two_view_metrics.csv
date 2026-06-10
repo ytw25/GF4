@@ -1,0 +1,2 @@
+image_i,image_j,filtered_matches,essential_inliers,pose_inliers,triangulated_points,positive_depth_points,kept_points,median_reprojection_error_px,mean_reprojection_error_px,focal_length_px
+IMG_20260518_203931.jpg,IMG_20260518_203933.jpg,218,193,193,193,193,193,0.14753138922441394,0.18217771766455998,1920.0

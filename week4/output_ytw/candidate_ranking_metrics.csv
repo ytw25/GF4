@@ -1,0 +1,9 @@
+iteration,image,pnp_correspondences,pnp_inliers,pnp_inlier_ratio,coverage_score,mean_track_length,median_reprojection_error_px,p90_reprojection_error_px,hard_gate_passed,score,selected,reason
+3,similar1.jpg,1,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+3,similar10.jpg,0,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+3,similar4.jpg,13,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+3,similar5.jpg,23,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+3,similar6.jpg,16,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+3,similar7.jpg,17,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+3,similar8.jpg,4,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+3,similar9.jpg,1,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences

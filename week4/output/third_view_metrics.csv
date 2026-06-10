@@ -1,0 +1,5 @@
+image_k,anchor_matches,pnp_correspondences,pnp_inliers,median_reprojection_error_px,mean_reprojection_error_px,focal_length_px
+similar2.jpg,179,15,78,2.839537151022852,2.6452292361556746,1920.0
+similar3.jpg,250,16,110,1.8055128521277743,2.145783782625175,1920.0
+similar4.jpg,209,16,106,3.553643479278312,3.4277374942612933,1920.0
+similar5.jpg,124,11,39,1.25281423563229,1.37892513164584,1920.0

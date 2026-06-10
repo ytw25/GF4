@@ -1,0 +1,14 @@
+iteration,image,pnp_correspondences,pnp_inliers,pnp_inlier_ratio,coverage_score,mean_track_length,median_reprojection_error_px,p90_reprojection_error_px,hard_gate_passed,score,selected,reason
+3,IMG_20260516_152213.jpg,33,26,0.7878787878787878,0.25,2.0,2.307196643199081,4.6458095639011745,False,0.0,False,below PnP inlier threshold
+3,IMG_20260516_152222_1.jpg,31,15,0.4838709677419355,0.25,2.0,2.230709218026365,3.404996606815461,False,0.0,False,below PnP inlier threshold
+3,IMG_20260516_152224.jpg,5,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+3,IMG_20260516_152244.jpg,4,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+3,IMG_20260516_152405.jpg,8,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+3,IMG_20260516_152405_1.jpg,12,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+3,IMG_20260516_152537.jpg,5,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+3,IMG_20260516_152538.jpg,7,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+3,IMG_20260516_152538_1.jpg,23,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+3,IMG_20260516_152541.jpg,9,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+3,IMG_20260516_152611.jpg,4,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+3,IMG_20260516_152613.jpg,6,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+3,IMG_20260516_152727.jpg,3,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences

@@ -1,0 +1,2 @@
+input_images,registered_images,rejected_images,points3d,initial_image1,initial_image2,initial_pair_score,lowe_ratio,min_triangulation_angle_deg,median_track_length,mean_track_length,bundle_adjustment_enabled,ba_observations,ba_initial_mean_error_px,ba_final_mean_error_px,ba_initial_median_error_px,ba_final_median_error_px
+18,10,8,1072,IMG_20260518_203931.jpg,IMG_20260518_203933.jpg,7,0.7,1.0,2.0,2.486940298507463,True,2666,0.8968364758431997,0.6483822539370598,0.46049895073997993,0.3977553944265037

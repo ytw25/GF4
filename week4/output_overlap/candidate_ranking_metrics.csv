@@ -1,0 +1,94 @@
+iteration,image,pnp_correspondences,pnp_inliers,pnp_inlier_ratio,coverage_score,mean_track_length,median_reprojection_error_px,p90_reprojection_error_px,hard_gate_passed,score,selected,reason
+3,IMG_20260516_152840.jpg,3,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+3,IMG_20260516_152841.jpg,2,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+3,IMG_20260516_152842.jpg,6,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+3,IMG_20260516_152843.jpg,5,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+3,IMG_20260516_152845.jpg,4,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+3,IMG_20260516_152846.jpg,4,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+3,IMG_20260516_152853.jpg,2,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+3,IMG_20260516_152853_1.jpg,4,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+3,IMG_20260516_152854.jpg,4,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+3,IMG_20260516_152854_1.jpg,2,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+3,IMG_20260516_152855.jpg,4,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+3,IMG_20260516_152855_1.jpg,3,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+3,IMG_20260516_152856.jpg,2,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+3,IMG_20260516_153313.jpg,225,174,0.7733333333333333,0.5,2.0,2.722300532686874,4.430453535036598,True,174,False,
+3,IMG_20260516_153314.jpg,252,205,0.8134920634920635,0.625,2.0,2.2956250603538835,4.207851083738076,True,205,False,
+3,IMG_20260516_153314_1.jpg,274,234,0.8540145985401459,0.625,2.0,1.6910415656691586,3.1781599449922138,True,234,False,
+3,IMG_20260516_153316_1.jpg,323,313,0.9690402476780186,0.6875,2.0,1.048202764652039,2.5967772513861287,True,313,True,
+3,IMG_20260516_153317.jpg,321,305,0.9501557632398754,0.6875,2.0,0.8808363465135056,2.7331428403379814,True,305,False,
+4,IMG_20260516_152840.jpg,5,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+4,IMG_20260516_152841.jpg,5,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+4,IMG_20260516_152842.jpg,9,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+4,IMG_20260516_152843.jpg,7,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+4,IMG_20260516_152845.jpg,10,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+4,IMG_20260516_152846.jpg,8,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+4,IMG_20260516_152853.jpg,6,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+4,IMG_20260516_152853_1.jpg,4,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+4,IMG_20260516_152854.jpg,7,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+4,IMG_20260516_152854_1.jpg,5,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+4,IMG_20260516_152855.jpg,5,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+4,IMG_20260516_152855_1.jpg,5,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+4,IMG_20260516_152856.jpg,4,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+4,IMG_20260516_153313.jpg,318,225,0.7075471698113207,0.4375,2.5866666666666664,1.5849593812864726,3.6105418037956456,True,225,False,
+4,IMG_20260516_153314.jpg,359,264,0.7353760445682451,0.5,2.590909090909091,1.5027027417284982,3.2311222538847675,True,264,False,
+4,IMG_20260516_153314_1.jpg,401,331,0.8254364089775561,0.625,2.5347432024169185,1.483823734930074,2.9576811606397135,True,331,False,
+4,IMG_20260516_153317.jpg,488,462,0.9467213114754098,0.6875,2.567099567099567,0.8693822424550786,2.485617746436004,True,462,True,
+5,IMG_20260516_152840.jpg,8,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+5,IMG_20260516_152841.jpg,7,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+5,IMG_20260516_152842.jpg,10,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+5,IMG_20260516_152843.jpg,9,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+5,IMG_20260516_152845.jpg,14,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+5,IMG_20260516_152846.jpg,8,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+5,IMG_20260516_152853.jpg,9,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+5,IMG_20260516_152853_1.jpg,8,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+5,IMG_20260516_152854.jpg,12,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+5,IMG_20260516_152854_1.jpg,6,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+5,IMG_20260516_152855.jpg,8,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+5,IMG_20260516_152855_1.jpg,9,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+5,IMG_20260516_152856.jpg,6,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+5,IMG_20260516_153313.jpg,369,263,0.7127371273712737,0.5,3.2243346007604563,1.7376421643608724,4.127736961345125,True,263,False,
+5,IMG_20260516_153314.jpg,401,319,0.7955112219451371,0.625,3.2225705329153604,2.5016764098271125,4.308973703501564,True,319,False,
+5,IMG_20260516_153314_1.jpg,470,373,0.7936170212765957,0.625,3.163538873994638,1.5545183114619634,2.8921209801688605,True,373,True,
+6,IMG_20260516_152840.jpg,12,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+6,IMG_20260516_152841.jpg,7,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+6,IMG_20260516_152842.jpg,11,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+6,IMG_20260516_152843.jpg,12,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+6,IMG_20260516_152845.jpg,16,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+6,IMG_20260516_152846.jpg,10,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+6,IMG_20260516_152853.jpg,13,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+6,IMG_20260516_152853_1.jpg,11,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+6,IMG_20260516_152854.jpg,14,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+6,IMG_20260516_152854_1.jpg,8,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+6,IMG_20260516_152855.jpg,11,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+6,IMG_20260516_152855_1.jpg,10,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+6,IMG_20260516_152856.jpg,8,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+6,IMG_20260516_153313.jpg,432,329,0.7615740740740741,0.5625,3.68693009118541,2.883052509157557,4.539638397216348,True,329,False,
+6,IMG_20260516_153314.jpg,456,368,0.8070175438596491,0.625,3.744565217391304,2.484726548257594,3.988151013178371,True,368,True,
+7,IMG_20260516_152840.jpg,15,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+7,IMG_20260516_152841.jpg,10,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+7,IMG_20260516_152842.jpg,14,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+7,IMG_20260516_152843.jpg,15,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+7,IMG_20260516_152845.jpg,18,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+7,IMG_20260516_152846.jpg,12,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+7,IMG_20260516_152853.jpg,18,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+7,IMG_20260516_152853_1.jpg,12,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+7,IMG_20260516_152854.jpg,14,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+7,IMG_20260516_152854_1.jpg,13,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+7,IMG_20260516_152855.jpg,18,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+7,IMG_20260516_152855_1.jpg,11,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+7,IMG_20260516_152856.jpg,8,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+7,IMG_20260516_153313.jpg,530,445,0.839622641509434,0.625,3.8,2.5772240966606734,4.635379191618798,True,445,True,
+8,IMG_20260516_152840.jpg,16,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+8,IMG_20260516_152841.jpg,10,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+8,IMG_20260516_152842.jpg,19,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+8,IMG_20260516_152843.jpg,20,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+8,IMG_20260516_152845.jpg,20,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+8,IMG_20260516_152846.jpg,13,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+8,IMG_20260516_152853.jpg,18,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+8,IMG_20260516_152853_1.jpg,17,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+8,IMG_20260516_152854.jpg,15,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+8,IMG_20260516_152854_1.jpg,16,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+8,IMG_20260516_152855.jpg,22,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+8,IMG_20260516_152855_1.jpg,14,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+8,IMG_20260516_152856.jpg,11,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences

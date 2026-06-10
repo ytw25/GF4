@@ -1,0 +1,2 @@
+input_images,registered_images,rejected_images,points3d,initial_image1,initial_image2,initial_pair_score,lowe_ratio,min_triangulation_angle_deg,median_track_length,mean_track_length,bundle_adjustment_enabled
+20,7,13,1440,IMG_20260516_153315.jpg,IMG_20260516_153316.jpg,5,0.7,1.0,3.0,3.3618055555555557,False

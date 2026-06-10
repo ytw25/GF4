@@ -1,0 +1,11 @@
+iteration,image,pnp_correspondences,pnp_inliers,pnp_inlier_ratio,coverage_score,mean_track_length,median_reprojection_error_px,p90_reprojection_error_px,hard_gate_passed,score,selected,reason
+3,IMG_20260516_204707.jpg,12,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+3,IMG_20260516_204917.jpg,2,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+3,IMG_20260516_204923.jpg,5,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+3,IMG_20260516_204935.jpg,2,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+3,IMG_20260516_204941.jpg,2,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+3,IMG_20260516_204945.jpg,3,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+3,IMG_20260516_204951.jpg,6,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+3,IMG_20260516_204956.jpg,2,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+3,IMG_20260516_205002.jpg,0,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+3,IMG_20260516_205938.jpg,0,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences

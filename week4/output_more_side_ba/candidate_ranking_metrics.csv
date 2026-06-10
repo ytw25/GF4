@@ -1,0 +1,109 @@
+iteration,image,pnp_correspondences,pnp_inliers,pnp_inlier_ratio,coverage_score,mean_track_length,median_reprojection_error_px,p90_reprojection_error_px,hard_gate_passed,score,selected,reason
+3,IMG_20260518_203902.jpg,1,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+3,IMG_20260518_203904.jpg,2,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+3,IMG_20260518_203906.jpg,3,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+3,IMG_20260518_203908.jpg,0,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+3,IMG_20260518_203909.jpg,1,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+3,IMG_20260518_203913.jpg,2,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+3,IMG_20260518_203922.jpg,15,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+3,IMG_20260518_203924.jpg,16,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+3,IMG_20260518_203926.jpg,22,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+3,IMG_20260518_203929.jpg,10,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+3,IMG_20260518_203935.jpg,48,46,0.9583333333333334,0.375,2.0,2.2623555572881155,4.862745209772074,True,46,False,
+3,IMG_20260518_203937.jpg,55,50,0.9090909090909091,0.3125,2.0,1.2395644735281661,2.5077936211702503,True,50,True,
+3,IMG_20260518_203940.jpg,41,37,0.9024390243902439,0.375,2.0,0.7078814136319556,2.009576303351972,True,37,False,
+3,IMG_20260518_203942.jpg,17,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+3,IMG_20260518_203946.jpg,1,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+3,IMG_20260518_203948.jpg,1,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+4,IMG_20260518_203902.jpg,4,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+4,IMG_20260518_203904.jpg,4,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+4,IMG_20260518_203906.jpg,5,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+4,IMG_20260518_203908.jpg,3,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+4,IMG_20260518_203909.jpg,1,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+4,IMG_20260518_203913.jpg,6,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+4,IMG_20260518_203922.jpg,25,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+4,IMG_20260518_203924.jpg,27,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+4,IMG_20260518_203926.jpg,34,25,0.7352941176470589,0.125,2.52,1.221790810652334,2.879787612644468,False,0.0,False,below PnP inlier threshold
+4,IMG_20260518_203929.jpg,30,27,0.9,0.1875,2.185185185185185,1.5541237005867554,3.4694997110830537,False,0.0,False,below PnP inlier threshold
+4,IMG_20260518_203935.jpg,99,76,0.7676767676767676,0.375,2.3421052631578947,1.9572113804641242,3.6642804187929547,True,76,False,
+4,IMG_20260518_203940.jpg,95,82,0.8631578947368421,0.5,2.3048780487804876,0.8949444173649282,2.5470926705010064,True,82,True,
+4,IMG_20260518_203942.jpg,38,27,0.7105263157894737,0.25,2.4444444444444446,3.264024993575995,4.33223296908307,False,0.0,False,below PnP inlier threshold
+4,IMG_20260518_203946.jpg,5,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+4,IMG_20260518_203948.jpg,2,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+5,IMG_20260518_203902.jpg,6,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+5,IMG_20260518_203904.jpg,8,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+5,IMG_20260518_203906.jpg,7,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+5,IMG_20260518_203908.jpg,9,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+5,IMG_20260518_203909.jpg,3,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+5,IMG_20260518_203913.jpg,13,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+5,IMG_20260518_203922.jpg,36,22,0.6111111111111112,0.125,2.8181818181818183,2.358472638364658,3.673838086894211,False,0.0,False,below PnP inlier threshold
+5,IMG_20260518_203924.jpg,36,24,0.6666666666666666,0.1875,2.9583333333333335,1.4958089513595438,4.52981069107445,False,0.0,False,below PnP inlier threshold
+5,IMG_20260518_203926.jpg,46,38,0.8260869565217391,0.3125,2.8684210526315788,1.8871340188696206,4.086827668190475,True,38,False,
+5,IMG_20260518_203929.jpg,52,43,0.8269230769230769,0.3125,2.5348837209302326,1.7012057318669174,3.325338618440983,True,43,False,
+5,IMG_20260518_203935.jpg,138,110,0.7971014492753623,0.5,2.5545454545454547,2.5588471383326374,4.723679993793045,True,110,True,
+5,IMG_20260518_203942.jpg,74,59,0.7972972972972973,0.3125,2.6271186440677967,1.929259412291253,4.055639787015408,True,59,False,
+5,IMG_20260518_203946.jpg,10,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+5,IMG_20260518_203948.jpg,2,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+6,IMG_20260518_203902.jpg,6,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+6,IMG_20260518_203904.jpg,8,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+6,IMG_20260518_203906.jpg,8,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+6,IMG_20260518_203908.jpg,9,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+6,IMG_20260518_203909.jpg,5,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+6,IMG_20260518_203913.jpg,16,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+6,IMG_20260518_203922.jpg,40,26,0.65,0.25,3.0384615384615383,1.8567488240562984,4.093487460601608,False,0.0,False,below PnP inlier threshold
+6,IMG_20260518_203924.jpg,42,27,0.6428571428571429,0.1875,3.4444444444444446,1.7189049499921232,2.9093462826045715,False,0.0,False,below PnP inlier threshold
+6,IMG_20260518_203926.jpg,52,41,0.7884615384615384,0.3125,3.268292682926829,1.705810389364026,3.9479717634147184,True,41,False,
+6,IMG_20260518_203929.jpg,56,47,0.8392857142857143,0.25,2.9574468085106385,1.763925795157674,3.6394576529189138,True,47,False,
+6,IMG_20260518_203942.jpg,79,62,0.7848101265822784,0.25,3.0483870967741935,1.6771066202440572,3.8178947534616228,True,62,True,
+6,IMG_20260518_203946.jpg,11,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+6,IMG_20260518_203948.jpg,2,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+7,IMG_20260518_203902.jpg,7,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+7,IMG_20260518_203904.jpg,8,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+7,IMG_20260518_203906.jpg,9,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+7,IMG_20260518_203908.jpg,9,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+7,IMG_20260518_203909.jpg,7,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+7,IMG_20260518_203913.jpg,17,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+7,IMG_20260518_203922.jpg,43,24,0.5581395348837209,0.1875,3.5416666666666665,1.5263419278427683,3.3188280584512553,False,0.0,False,below PnP inlier threshold
+7,IMG_20260518_203924.jpg,45,31,0.6888888888888889,0.25,3.7419354838709675,1.5068955836298303,4.525434485022912,True,31,False,
+7,IMG_20260518_203926.jpg,59,46,0.7796610169491526,0.375,3.5869565217391304,2.1112809576346887,3.9306815124819,True,46,False,
+7,IMG_20260518_203929.jpg,72,61,0.8472222222222222,0.3125,3.1147540983606556,1.4918743841640587,3.480879229981244,True,61,True,
+7,IMG_20260518_203946.jpg,20,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+7,IMG_20260518_203948.jpg,4,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+8,IMG_20260518_203902.jpg,10,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+8,IMG_20260518_203904.jpg,11,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+8,IMG_20260518_203906.jpg,10,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+8,IMG_20260518_203908.jpg,11,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+8,IMG_20260518_203909.jpg,7,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+8,IMG_20260518_203913.jpg,18,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+8,IMG_20260518_203922.jpg,46,29,0.6304347826086957,0.1875,3.7241379310344827,1.5792940147375667,3.7957399567796775,False,0.0,False,below PnP inlier threshold
+8,IMG_20260518_203924.jpg,48,32,0.6666666666666666,0.25,3.96875,1.1082332273167776,3.558600083056235,True,32,False,
+8,IMG_20260518_203926.jpg,83,63,0.7590361445783133,0.4375,3.4603174603174605,1.9336151488398217,3.949447608261769,True,63,True,
+8,IMG_20260518_203946.jpg,35,22,0.6285714285714286,0.3125,2.590909090909091,3.0880578925322903,4.700862589078125,False,0.0,False,below PnP inlier threshold
+8,IMG_20260518_203948.jpg,9,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+9,IMG_20260518_203902.jpg,11,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+9,IMG_20260518_203904.jpg,12,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+9,IMG_20260518_203906.jpg,13,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+9,IMG_20260518_203908.jpg,12,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+9,IMG_20260518_203909.jpg,12,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+9,IMG_20260518_203913.jpg,19,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+9,IMG_20260518_203922.jpg,53,36,0.6792452830188679,0.1875,4.277777777777778,1.7863873443692366,4.157719431348582,False,0.0,False,below coverage threshold
+9,IMG_20260518_203924.jpg,56,38,0.6785714285714286,0.3125,4.342105263157895,1.8400105202148136,4.413089985889304,True,38,True,
+9,IMG_20260518_203946.jpg,35,22,0.6285714285714286,0.3125,2.8636363636363638,3.0880578925322903,4.700862589078125,False,0.0,False,below PnP inlier threshold
+9,IMG_20260518_203948.jpg,12,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+10,IMG_20260518_203902.jpg,14,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+10,IMG_20260518_203904.jpg,15,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+10,IMG_20260518_203906.jpg,15,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+10,IMG_20260518_203908.jpg,14,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+10,IMG_20260518_203909.jpg,20,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+10,IMG_20260518_203913.jpg,22,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+10,IMG_20260518_203922.jpg,73,56,0.7671232876712328,0.25,4.071428571428571,2.0858430391021567,4.826141298169057,True,56,True,
+10,IMG_20260518_203946.jpg,36,21,0.5833333333333334,0.25,2.8095238095238093,1.9643317596243277,4.7708304535209285,False,0.0,False,below PnP inlier threshold
+10,IMG_20260518_203948.jpg,14,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+11,IMG_20260518_203902.jpg,16,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+11,IMG_20260518_203904.jpg,17,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+11,IMG_20260518_203906.jpg,18,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+11,IMG_20260518_203908.jpg,21,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+11,IMG_20260518_203909.jpg,24,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences
+11,IMG_20260518_203913.jpg,31,14,0.45161290322580644,0.125,4.0,2.5579642559381064,4.665241304514104,False,0.0,False,below PnP inlier threshold
+11,IMG_20260518_203946.jpg,38,19,0.5,0.3125,3.1578947368421053,2.2288368664693827,4.590086715058087,False,0.0,False,below PnP inlier threshold
+11,IMG_20260518_203948.jpg,14,0,0.0,0.0,0.0,,,False,0.0,False,too few 2D-3D correspondences

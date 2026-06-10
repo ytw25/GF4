@@ -1,0 +1,9 @@
+image,reason,pnp_correspondences,pnp_inliers,candidate_score
+similar1.jpg,too few 2D-3D correspondences,1,0,0.0
+similar10.jpg,too few 2D-3D correspondences,0,0,0.0
+similar4.jpg,too few 2D-3D correspondences,13,0,0.0
+similar5.jpg,too few 2D-3D correspondences,23,0,0.0
+similar6.jpg,too few 2D-3D correspondences,16,0,0.0
+similar7.jpg,too few 2D-3D correspondences,17,0,0.0
+similar8.jpg,too few 2D-3D correspondences,4,0,0.0
+similar9.jpg,too few 2D-3D correspondences,1,0,0.0

@@ -1,0 +1,14 @@
+image,reason,pnp_correspondences,pnp_inliers,candidate_score
+IMG_20260516_152840.jpg,too few 2D-3D correspondences,16,0,0.0
+IMG_20260516_152841.jpg,too few 2D-3D correspondences,10,0,0.0
+IMG_20260516_152842.jpg,too few 2D-3D correspondences,19,0,0.0
+IMG_20260516_152843.jpg,too few 2D-3D correspondences,20,0,0.0
+IMG_20260516_152845.jpg,too few 2D-3D correspondences,20,0,0.0
+IMG_20260516_152846.jpg,too few 2D-3D correspondences,13,0,0.0
+IMG_20260516_152853.jpg,too few 2D-3D correspondences,18,0,0.0
+IMG_20260516_152853_1.jpg,too few 2D-3D correspondences,17,0,0.0
+IMG_20260516_152854.jpg,too few 2D-3D correspondences,15,0,0.0
+IMG_20260516_152854_1.jpg,too few 2D-3D correspondences,16,0,0.0
+IMG_20260516_152855.jpg,too few 2D-3D correspondences,22,0,0.0
+IMG_20260516_152855_1.jpg,too few 2D-3D correspondences,14,0,0.0
+IMG_20260516_152856.jpg,too few 2D-3D correspondences,11,0,0.0

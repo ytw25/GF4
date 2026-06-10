@@ -1,0 +1,2 @@
+image_i,image_j,filtered_matches,essential_inliers,pose_inliers,triangulated_points,positive_depth_points,kept_points,median_reprojection_error_px,mean_reprojection_error_px,focal_length_px
+similar7.jpg,similar8.jpg,49,22,22,22,22,22,0.24076154055121796,0.2551863622426857,1920.0
