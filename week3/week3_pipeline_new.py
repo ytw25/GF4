@@ -94,7 +94,7 @@ def parse_args() -> argparse.Namespace:
         help="Resize images so their long edge is at most this size. Use 0 to disable.",
     )
     parser.add_argument("--max-features", type=int, default=4000)
-    parser.add_argument("--ratio", type=float, default=0.75)
+    parser.add_argument("--ratio", type=float, default=0.7)
     parser.add_argument("--focal-length-px", type=float, default=None)
     parser.add_argument("--principal-point", nargs=2, type=float, metavar=("CX", "CY"), default=None)
     parser.add_argument("--ransac-threshold", type=float, default=1.0)
@@ -108,7 +108,7 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument("--pnp-ransac-threshold", type=float, default=6.0)
     parser.add_argument("--min-pairwise-inliers", type=int, default=20)
-    parser.add_argument("--min-pnp-correspondences", type=int, default=6)
+    parser.add_argument("--min-pnp-correspondences", type=int, default=30)
     parser.add_argument("--min-pnp-inliers", type=int, default=6)
     parser.add_argument(
         "--max-new-points-per-pair",
