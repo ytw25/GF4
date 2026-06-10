@@ -115,14 +115,17 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--pnp-ransac-threshold", type=float, default=6.0)
     parser.add_argument("--min-pairwise-inliers", type=int, default=20)
     parser.add_argument("--min-pnp-correspondences", type=int, default=30)
+    parser.add_argument("--min-pnp-inliers", type=int, default=6)
     parser.add_argument("--min-initial-inliers", type=int, default=50)
     parser.add_argument("--min-initial-inlier-ratio", type=float, default=0.4)
     parser.add_argument("--min-initial-triangulation-angle-deg", type=float, default=1.5)
     parser.add_argument("--max-initial-median-epipolar-error", type=float, default=1.0)
+    parser.add_argument("--max-initial-median-reprojection-error", type=float, default=2.0)
     parser.add_argument("--min-registration-pnp-inliers", type=int, default=30)
     parser.add_argument("--min-registration-pnp-inlier-ratio", type=float, default=0.25)
     parser.add_argument("--min-registration-coverage", type=float, default=0.2)
-    parser.add_argument("--max-registration-median-error", type=float, default=4.0)
+    parser.add_argument("--max-registration-median-error", type=float, default=2.5)
+    parser.add_argument("--max-registration-p90-error", type=float, default=6.0)
     parser.add_argument(
         "--max-new-points-per-pair",
         type=int,
@@ -166,6 +169,8 @@ def parse_args() -> argparse.Namespace:
         parser.error("--min-pairwise-inliers cannot be negative")
     if args.min_pnp_correspondences < 4:
         parser.error("--min-pnp-correspondences must be at least 4")
+    if args.min_pnp_inliers < 4:
+        parser.error("--min-pnp-inliers must be at least 4")
     if args.min_initial_inliers < 8:
         parser.error("--min-initial-inliers must be at least 8")
     if not 0.0 <= args.min_initial_inlier_ratio <= 1.0:
@@ -174,6 +179,8 @@ def parse_args() -> argparse.Namespace:
         parser.error("--min-initial-triangulation-angle-deg cannot be negative")
     if args.max_initial_median_epipolar_error <= 0:
         parser.error("--max-initial-median-epipolar-error must be positive")
+    if args.max_initial_median_reprojection_error <= 0:
+        parser.error("--max-initial-median-reprojection-error must be positive")
     if args.min_registration_pnp_inliers < 4:
         parser.error("--min-registration-pnp-inliers must be at least 4")
     if not 0.0 <= args.min_registration_pnp_inlier_ratio <= 1.0:
@@ -182,6 +189,8 @@ def parse_args() -> argparse.Namespace:
         parser.error("--min-registration-coverage must be between 0 and 1")
     if args.max_registration_median_error <= 0:
         parser.error("--max-registration-median-error must be positive")
+    if args.max_registration_p90_error <= 0:
+        parser.error("--max-registration-p90-error must be positive")
     if args.max_new_points_per_pair < 0:
         parser.error("--max-new-points-per-pair cannot be negative")
     if (args.image1 is None) != (args.image2 is None):
@@ -381,6 +390,11 @@ def _initial_pair_hard_gate_reason(metrics: dict, args: argparse.Namespace) -> s
         or metrics["median_epipolar_error_px"] > args.max_initial_median_epipolar_error
     ):
         return "above initial epipolar-error threshold"
+    if (
+        metrics["median_reprojection_error_px"] is None
+        or metrics["median_reprojection_error_px"] > args.max_initial_median_reprojection_error
+    ):
+        return "above initial reprojection-error threshold"
     if (
         metrics["median_triangulation_angle_deg"] is None
         or metrics["median_triangulation_angle_deg"] < args.min_initial_triangulation_angle_deg
@@ -592,8 +606,6 @@ def _select_initial_pair(
         image_j = metrics["image_j"]
         connected = (adjacency.get(image_i, set()) | adjacency.get(image_j, set())) - {image_i, image_j}
         metrics["connectivity"] = len(connected)
-        metrics["connectivity_threshold"] = args.min_pairwise_inliers
-        metrics["score"] = metrics["connectivity"] if candidate["usable"] else 0.0
 
     if requested_indices is not None:
         pair = candidates[0]
@@ -726,6 +738,11 @@ def _registration_hard_gate_reason(row: dict, args: argparse.Namespace) -> str |
         or row["median_reprojection_error_px"] > args.max_registration_median_error
     ):
         return "above median reprojection-error threshold"
+    if (
+        row["p90_reprojection_error_px"] is None
+        or row["p90_reprojection_error_px"] > args.max_registration_p90_error
+    ):
+        return "above p90 reprojection-error threshold"
     if row["coverage_score"] < args.min_registration_coverage:
         return "below coverage threshold"
     return None
@@ -779,6 +796,16 @@ def _score_registration_candidate(
     pnp_inliers = int(np.sum(pnp_mask))
     row["pnp_inliers"] = pnp_inliers
     row["pnp_inlier_ratio"] = pnp_inliers / len(pnp_points3d) if len(pnp_points3d) else 0.0
+    if pnp_inliers < args.min_pnp_inliers:
+        row["reason"] = "too few PnP inliers"
+        return {
+            "usable": False,
+            "row": row,
+            "R_new": R_new,
+            "t_new": t_new,
+            "pnp_mask": pnp_mask,
+            **collected,
+        }
 
     pnp_errors = compute_reprojection_errors(
         pnp_points3d[pnp_mask],
@@ -1439,7 +1466,7 @@ def run(args: argparse.Namespace) -> tuple[TwoViewResult, list[ThirdViewResult],
         "points3d": len(point_array),
         "initial_image1": features1.path.name,
         "initial_image2": features2.path.name,
-        "initial_pair_score": initial_pair["metrics"]["score"],
+        "initial_pair_connectivity": initial_pair["metrics"]["connectivity"],
         "lowe_ratio": args.ratio,
         "min_triangulation_angle_deg": args.min_triangulation_angle_deg,
         "median_track_length": _median(track_lengths),
